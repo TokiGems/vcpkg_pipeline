@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'vcpkg_pipeline'
+
+if Encoding.default_external != Encoding::UTF_8
+
+  warn <<-DOC
+    \e[33m\
+    WARNING: vcpkg-Pipeline requires your terminal to be using UTF-8 encoding.
+    Consider adding the following to ~/.profile:
+
+    export LANG=en_US.UTF-8
+    \e[0m
+  DOC
+
+end
+
+VPL::Command.run(ARGV)
