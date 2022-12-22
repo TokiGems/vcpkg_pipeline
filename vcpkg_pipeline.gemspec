@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ['郑贤达']
   s.email       = 'zhengxianda0512@gmail.com'
   s.files       = Dir['lib/**/*.rb']
-  s.homepage    = 'https://github.com/TokiGems/vcpkg_pipeline'
+  s.homepage    = 'https://github.com/TokiGems/vcpkg-pipeline'
   s.license     = 'MIT'
 
   s.executables = ['vpl']
