@@ -7,7 +7,7 @@ require 'vcpkg_pipeline/core/log'
 # VCPkg
 module VCPkg
   def self.root
-    `echo $VCPKG_ROOT`
+    `echo $VCPKG_ROOT`.sub(/\n/, '')
   end
 
   def self.ports
