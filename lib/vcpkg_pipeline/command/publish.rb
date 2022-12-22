@@ -2,6 +2,7 @@
 
 require 'vcpkg_pipeline/extension/vcpkg_vpl'
 
+require 'vcpkg_pipeline/core/log'
 require 'vcpkg_pipeline/core/scanner'
 
 require 'vcpkg_pipeline/command/update'
@@ -19,7 +20,9 @@ module VPL
         CLAide::Argument.new('项目根目录(默认使用当前目录)', false)
       ]
       def self.options
-        [].concat(super).concat(options_extension)
+        [
+          ['--registry=.', '指定vcpkg的registry目录, 不可为空']
+        ].concat(super).concat(options_extension)
       end
 
       def self.options_extension_hash
@@ -31,15 +34,19 @@ module VPL
       def initialize(argv)
         @path = argv.shift_argument || Dir.pwd
 
+        @registry = argv.option('registry', '').split(',').first
         super
       end
 
       def run
+        VPL.error("registry目录异常: #{@registry}") unless File.directory? @registry
+
         Update::All.run([@path] + argv_extension['update'])
 
         scanner = Scanner.new(@path)
 
-        VCPkg.publish(scanner.vcport)
+        vcpkg = VCPkg.open(@registry)
+        vcpkg.publish(scanner.vcport)
       end
     end
   end

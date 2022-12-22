@@ -6,12 +6,8 @@ require 'vcpkg_pipeline/core/log'
 
 # VCPkg
 module VCPkg
-  def self.root
-    `echo $VCPKG_ROOT`.sub(/\n/, '')
-  end
-
-  def self.ports
-    "#{root}/ports"
+  def self.open(path = nil)
+    VCPkg::Base.new(path || root)
   end
 
   def self.hash(zip_path)
@@ -22,21 +18,34 @@ module VCPkg
     `vcpkg format-manifest #{vcpkg_json_path}`
   end
 
-  def self.publish(vcport)
-    name = vcport.vcpkg.name
-    version = vcport.vcpkg.version
+  # VCPkg::Base
+  class Base
+    attr_accessor :path
 
-    git_vcpkg = Git.open(root)
+    def initialize(path)
+      @path = path
+    end
 
-    git_vcpkg.quick_stash('保存之前的修改')
+    def ports
+      "#{@path}/ports"
+    end
 
-    port_exist = File.directory? "#{VCPkg.root}/ports/#{name}"
+    def publish(vcport)
+      name = vcport.vcpkg.name
+      version = vcport.vcpkg.version
 
-    `cp -fr #{vcport.port_path} #{ports}/#{name}`
-    `vcpkg x-add-version #{name}`
+      git_vcpkg = Git.open(@path)
 
-    git_vcpkg.add('.')
-    git_vcpkg.commit("[#{name}] #{port_exist ? 'Update' : 'Add'} #{version}")
-    git_vcpkg.quick_push
+      git_vcpkg.quick_stash('保存之前的修改')
+
+      port_exist = File.directory? "#{@path}/ports/#{name}"
+
+      `cp -fr #{vcport.port_path} #{ports}/#{name}`
+      `vcpkg x-add-version #{name} --vcpkg-root=#{@path}`
+
+      git_vcpkg.add('.')
+      git_vcpkg.commit("[#{name}] #{port_exist ? 'Update' : 'Add'} #{version}")
+      git_vcpkg.quick_push
+    end
   end
 end
