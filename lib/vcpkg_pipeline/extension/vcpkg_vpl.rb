@@ -32,7 +32,7 @@ module VCPkg
 
     port_exist = File.directory? "#{VCPkg.root}/ports/#{name}"
 
-    `cp -fr #{vcport.port_path} #{ports}`
+    `cp -fr #{vcport.port_path} #{ports}/#{name}`
     `vcpkg x-add-version #{name}`
 
     git_vcpkg.add('.')
