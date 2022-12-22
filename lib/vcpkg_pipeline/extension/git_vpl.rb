@@ -17,7 +17,7 @@ module Git
     end
 
     def quick_push(new_tag = nil)
-      return unless ENV['Release']
+      return if ENV['Debug']
 
       has_tag = !new_tag.empty?
       if has_tag

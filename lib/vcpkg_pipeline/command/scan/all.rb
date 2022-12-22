@@ -30,7 +30,7 @@ module VPL
         def run
           scanner = Scanner.new(@path)
 
-          VPL.info("Release: #{ENV['Release'] ? true : false}")
+          VPL.info("Debug: #{ENV['Debug'] ? true : false}")
           VPL.info("Git: #{scanner.git}")
           VPL.info("CMake: #{scanner.cmake}")
           VPL.info("VCPort: #{scanner.vcport}")
