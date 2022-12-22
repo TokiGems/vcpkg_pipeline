@@ -30,6 +30,11 @@ module Git
       quick_push_tag(has_tag)
     end
 
+    def quick_stash(msg)
+      add('.')
+      branch.stashes.save(msg)
+    end
+
     def to_s
       "#{remote}-#{branches.current.first}"
     end
