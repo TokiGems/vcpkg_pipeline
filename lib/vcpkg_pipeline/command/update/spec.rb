@@ -19,7 +19,9 @@ module VPL
         ]
 
         def self.options
-          [].concat(super)
+          [
+            ['--version=x.x.x', '新版本号。(默认使用patch+1)']
+          ].concat(super)
         end
 
         def initialize(argv)

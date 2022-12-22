@@ -5,6 +5,7 @@ require 'vcpkg_pipeline/extension/vcpkg_vpl'
 require 'vcpkg_pipeline/core/scanner'
 
 require 'vcpkg_pipeline/command/update'
+require 'vcpkg_pipeline/command/update/all'
 
 module VPL
   class Command
@@ -23,7 +24,7 @@ module VPL
 
       def self.options_extension_hash
         Hash[
-          'update' => Update.options,
+          'update' => Update::All.options,
         ]
       end
 

@@ -2,11 +2,11 @@
 
 require 'vcpkg_pipeline/core/updater'
 
-require 'vcpkg_pipeline/command/update/all'
 require 'vcpkg_pipeline/command/update/spec'
 require 'vcpkg_pipeline/command/update/cmake'
 require 'vcpkg_pipeline/command/update/vcport'
 require 'vcpkg_pipeline/command/update/git'
+require 'vcpkg_pipeline/command/update/all'
 
 module VPL
   class Command

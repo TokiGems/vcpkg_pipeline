@@ -18,7 +18,9 @@ module VPL
         ]
 
         def self.options
-          [].concat(super)
+          [
+            ['--output=./', '项目打包的输出目录。(默认使用项目 根目录/build)']
+          ].concat(super)
         end
 
         def initialize(argv)

@@ -10,7 +10,7 @@ module VPL
         self.summary = '更新项目内容'
 
         self.description = <<-DESC
-          更新项目CMake、VCPort、Git Tag内容。
+          更新项目Spec、CMake、VCPort、Git Tag内容。
         DESC
 
         self.arguments = [
