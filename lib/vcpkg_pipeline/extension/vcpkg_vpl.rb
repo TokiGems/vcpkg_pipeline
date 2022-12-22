@@ -20,32 +20,48 @@ module VCPkg
 
   # VCPkg::Base
   class Base
-    attr_accessor :path
+    attr_accessor :path, :git
 
     def initialize(path)
       @path = path
+
+      @git = Git.open(@path)
     end
 
     def ports
       "#{@path}/ports"
     end
 
+    def copy_port(vcport, commit_message)
+      name = vcport.vcpkg.name
+
+      `cp #{vcport.port_path}/* #{ports}/#{name}`
+      @git.add('.')
+      @git.commit(commit_message)
+    end
+
+    def add_version(vcport, commit_message)
+      name = vcport.vcpkg.name
+
+      `vcpkg x-add-version #{name} --vcpkg-root=#{@path}`
+      @git.add('.')
+      @git.commit(commit_message, amend: true)
+    end
+
     def publish(vcport)
       name = vcport.vcpkg.name
-      version = vcport.vcpkg.version
 
-      git_vcpkg = Git.open(@path)
-
-      git_vcpkg.quick_stash('保存之前的修改')
+      @git.quick_stash('保存之前的修改')
 
       port_exist = File.directory? "#{@path}/ports/#{name}"
+      `mkdir -p #{@path}/ports/#{name}` unless port_exist
 
-      `cp -fr #{vcport.port_path} #{ports}/#{name}`
-      `vcpkg x-add-version #{name} --vcpkg-root=#{@path}`
+      commit_message = "[#{name}] #{port_exist ? 'Update' : 'Add'} #{vcport.vcpkg.version}"
 
-      git_vcpkg.add('.')
-      git_vcpkg.commit("[#{name}] #{port_exist ? 'Update' : 'Add'} #{version}")
-      git_vcpkg.quick_push
+      copy_port(vcport, commit_message)
+      add_version(vcport, commit_message)
+
+      @git.quick_push
     end
   end
 end

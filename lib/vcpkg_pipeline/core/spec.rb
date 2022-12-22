@@ -46,12 +46,15 @@ module VPL
     def distfile_package(output_path = nil)
       output_path ||= '.'
       distfile_path = "#{output_path}/#{distfile_name}"
-      `zip #{distfile_path} #{sources.join(' ')}`
-      if File.exist? distfile_path
-        VPL.info("Dist包 打包成功: #{distfile_path}")
-      else
-        VPL.error("Dist包 打包失败: #{distfile_path}")
+
+      zip_sources = []
+      @sources.each do |source|
+        zip_sources += Dir[source]
       end
+      VPL.info(zip_sources.join('\n'))
+      `zip #{distfile_path} #{zip_sources.join(' ')}`
+
+      VPL.error("Dist包 打包失败: #{distfile_path}") unless File.exist? distfile_path
       VCPkg.hash(distfile_path)
     end
 
