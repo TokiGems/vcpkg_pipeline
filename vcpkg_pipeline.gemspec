@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'vcpkg_pipeline'
-  s.version     = '0.1.2'
+  s.version     = '0.1.3'
   s.summary     = 'vcpkg 流水线工具'
   s.description = '为 vcpkg 开发设计的集项目构建、发布为一体的强大工具'
   s.authors     = ['郑贤达']
