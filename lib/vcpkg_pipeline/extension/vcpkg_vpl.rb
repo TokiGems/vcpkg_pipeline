@@ -28,7 +28,7 @@ module VCPkg
 
     git_vcpkg = Git.open(root)
 
-    quick_stash('保存之前的修改')
+    git_vcpkg.quick_stash('保存之前的修改')
 
     port_exist = File.directory? "#{VCPkg.root}/ports/#{name}"
 

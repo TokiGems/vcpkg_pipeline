@@ -13,21 +13,21 @@ module Git
 
     def quick_push_tag(new_tag = nil)
       unless ENV['Debug']
-        has_tag = !new_tag.empty?
+        has_tag = !new_tag.nil?
         push(remote, current_branch, has_tag)
       end
       VPL.info("Git上传 #{remote} #{current_branch} #{new_tag}")
     end
 
     def quick_push(new_tag = nil)
-      has_tag = !new_tag.empty?
+      has_tag = !new_tag.nil?
       if has_tag
         tags.each { |tag| VPL.error("当前版本 #{new_tag} 已发布, 请尝试其他版本号") if tag.name.eql? new_tag }
 
         add_tag(new_tag)
         VPL.info("Git提交Tag: #{new_tag}")
       end
-      quick_push_tag(has_tag)
+      quick_push_tag(new_tag)
     end
 
     def quick_stash(msg)
