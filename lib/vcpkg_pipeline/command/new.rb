@@ -23,13 +23,13 @@ module VPL
 
       def self.options
         [
-          '--template-url=https://github.com/TKCMake/vcport-template.git',
-          'vcport模版地址'
+          ['--template-url=https://github.com/TKCMake/vcport-template.git', 'vcport模版地址']
         ].concat(super).concat(options_extension)
       end
 
       def initialize(argv)
-        @name = argv.shift_argument
+        @name = argv.shift_argument || ''
+
         VPL.error('未输入port名称') if @name.empty?
 
         @template = argv.option('template-url', '').split(',').first
@@ -37,13 +37,16 @@ module VPL
         super
       end
 
-      def run
-        Git.clone(@template, @name, depth: 1)
-
-        replacements = {
+      def replacements
+        {
           'PT_PORT_NAME' => @name,
           'PT_USER_NAME' => Git.global_config('user.name')
         }
+      end
+
+      def run
+        Git.clone(@template, @name, depth: 1)
+
         Dir.replace_all(@name, replacements)
 
         git = Git.open(@name)
