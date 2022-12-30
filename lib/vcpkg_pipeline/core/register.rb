@@ -14,23 +14,23 @@ module VPL
     end
 
     def list
-      Dir["#{registeries}/*"].each do |registory|
-        git = Git.open(registory)
-        name = File.basename(registory)
+      Dir["#{registeries}/*"].each do |reg|
+        git = Git.open(reg)
+        name = File.basename(reg)
         url = git.remote.url
-        path = registory
+        path = reg
 
-        VPL.info("\
-        \n#{name}\
-        \n- URL:\t#{url}\
-        \n- Path:\t#{path}")
+        VPL.info("#{name}")
+        puts "- URL:\t#{url}"
+        puts "- Path:\t#{path}"
+        puts "\n"
       end
     end
 
     def exist(name)
       is_exist = false
-      Dir["#{registeries}/*"].each do |registory|
-        is_exist = name.eql? File.basename(registory)
+      Dir["#{registeries}/*"].each do |reg|
+        is_exist = name.eql? File.basename(reg)
         break if is_exist
       end
       is_exist
@@ -47,8 +47,8 @@ module VPL
     end
 
     def remove(name)
-      Dir["#{registeries}/*"].each do |registory|
-        `rm -fr #{registory}` if name.eql? File.basename(registory)
+      Dir["#{registeries}/*"].each do |reg|
+        `rm -fr #{reg}` if name.eql? File.basename(reg)
       end
     end
   end

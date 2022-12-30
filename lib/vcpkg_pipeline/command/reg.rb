@@ -3,15 +3,15 @@
 require 'vcpkg_pipeline/core/log'
 require 'vcpkg_pipeline/core/register'
 
-require 'vcpkg_pipeline/command/registory/list'
-require 'vcpkg_pipeline/command/registory/add'
-require 'vcpkg_pipeline/command/registory/remove'
+require 'vcpkg_pipeline/command/reg/list'
+require 'vcpkg_pipeline/command/reg/add'
+require 'vcpkg_pipeline/command/reg/remove'
 
 module VPL
   # Command
   class Command
-    # VPL::Command::Registory
-    class Registory < Command
+    # VPL::Command::Reg
+    class Reg < Command
       self.abstract_command = true
 
       self.summary = '注册表管理'

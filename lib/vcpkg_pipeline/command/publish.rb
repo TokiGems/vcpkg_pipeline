@@ -21,7 +21,7 @@ module VPL
       ]
       def self.options
         [
-          ['--registry=.', '指定vcpkg的registry目录, 不可为空']
+          ['--reg=.', '指定vcpkg的reg目录, 不可为空']
         ].concat(super).concat(options_extension)
       end
 
@@ -34,18 +34,18 @@ module VPL
       def initialize(argv)
         @path = argv.shift_argument || Dir.pwd
 
-        @registry = argv.option('registry', '').split(',').first
+        @reg = argv.option('reg', '').split(',').first
         super
       end
 
       def run
-        VPL.error("registry目录异常: #{@registry}") unless File.directory? @registry
+        VPL.error("reg目录异常: #{@reg}") unless File.directory? @reg
 
         Update::All.run([@path] + argv_extension['update'])
 
         scanner = Scanner.new(@path)
 
-        vcpkg = VCPkg.open(@registry)
+        vcpkg = VCPkg.open(@reg)
         vcpkg.publish(scanner.vcport)
       end
     end

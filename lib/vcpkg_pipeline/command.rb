@@ -9,7 +9,7 @@ module VPL
     require 'vcpkg_pipeline/command/scan'
     require 'vcpkg_pipeline/command/update'
     require 'vcpkg_pipeline/command/publish'
-    require 'vcpkg_pipeline/command/registory'
+    require 'vcpkg_pipeline/command/reg'
 
     self.abstract_command = true
     self.command = 'vpl'

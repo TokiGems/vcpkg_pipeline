@@ -4,18 +4,17 @@ require 'vcpkg_pipeline/core/register'
 
 module VPL
   class Command
-    class Registory < Command
-      # VPL::Command::Registory::Add
-      class Add < Registory
-        self.summary = '添加新的注册表'
+    class Reg < Command
+      # VPL::Command::Reg::Remove
+      class Remove < Reg
+        self.summary = '移除指定注册表'
 
         self.description = <<-DESC
-          添加新的注册表。
+          移除指定注册表。
         DESC
 
         self.arguments = [
-          CLAide::Argument.new('注册表名称', true),
-          CLAide::Argument.new('注册表地址', true)
+          CLAide::Argument.new('注册表名称', true)
         ]
 
         def self.options
@@ -24,16 +23,14 @@ module VPL
 
         def initialize(argv)
           @name = argv.shift_argument || ''
-          @url = argv.shift_argument || ''
 
           VPL.error('未输入注册表名称') if @name.empty?
-          VPL.error('未输入注册表地址') if @url.empty?
 
           super
         end
 
         def run
-          Register.new.add(@name, @url)
+          Register.new.remove(@name)
         end
       end
     end

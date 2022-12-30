@@ -4,9 +4,9 @@ require 'vcpkg_pipeline/core/register'
 
 module VPL
   class Command
-    class Registory < Command
-      # VPL::Command::Registory::List
-      class List < Registory
+    class Reg < Command
+      # VPL::Command::Reg::List
+      class List < Reg
         self.summary = '查看现有注册表'
 
         self.description = <<-DESC
