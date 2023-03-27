@@ -26,13 +26,13 @@ module VPL
           @name = argv.shift_argument || ''
           @url = argv.shift_argument || ''
 
-          VPL.error('未输入注册表名称') if @name.empty?
-          VPL.error('未输入注册表地址') if @url.empty?
-
           super
         end
 
         def run
+          VPL.error('未输入注册表名称') if @name.empty?
+          VPL.error('未输入注册表地址') if @url.empty?
+
           Register.new.add(@name, @url)
         end
       end

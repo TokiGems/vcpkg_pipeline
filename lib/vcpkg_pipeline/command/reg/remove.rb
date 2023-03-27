@@ -24,12 +24,12 @@ module VPL
         def initialize(argv)
           @name = argv.shift_argument || ''
 
-          VPL.error('未输入注册表名称') if @name.empty?
-
           super
         end
 
         def run
+          VPL.error('未输入注册表名称') if @name.empty?
+
           Register.new.remove(@name)
         end
       end

@@ -30,10 +30,9 @@ module VPL
       def initialize(argv)
         @name = argv.shift_argument || ''
 
-        VPL.error('未输入port名称') if @name.empty?
-
         @template = argv.option('template-url', '').split(',').first
         @template ||= 'https://github.com/TKCMake/vcport-template.git'
+
         super
       end
 
@@ -45,6 +44,8 @@ module VPL
       end
 
       def run
+        VPL.error('未输入port名称') if @name.empty?
+
         Git.clone(@template, @name, depth: 1)
 
         Dir.replace_all(@name, replacements)
