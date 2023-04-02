@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.executables = ['vpl']
 
   s.add_runtime_dependency 'claide',               '>= 1.0.2', '< 2.0'     # 命令行工具
-  s.add_runtime_dependency 'git',                  '>= 1.8.1', '< 1.12.0'     # Git项目管理工具
+  s.add_runtime_dependency 'git',                  '>= 1.8.1', '<= 1.12.0'     # Git项目管理工具
   s.add_runtime_dependency 'json',                 '>= 2.6.1', '< 3.0'     # JSON读写工具
 
   ## Make sure you can build the gem on older versions of RubyGems too:
