@@ -13,7 +13,7 @@ module VPL
 
     self.abstract_command = true
     self.command = 'vpl'
-    self.description = 'vcpkg-Pipeline 是 vcpkg 的流水线工具'
+    self.description = 'vcpkg_pipeline 是 vcpkg 的流水线工具'
 
     def self.options
       [
@@ -50,7 +50,7 @@ module VPL
     #
     def self.ensure_not_root_or_allowed!(argv, uid = Process.uid, is_windows = Gem.win_platform?)
       root_allowed = argv.include?('--allow-root')
-      help! 'You cannot run vcpkg-Pipeline as root' unless root_allowed || uid != 0 || is_windows
+      help! 'You cannot run vcpkg_pipeline as root' unless root_allowed || uid != 0 || is_windows
     end
 
     # 读取Git版本号, 返回一个新的 {Gem::Version} 实例
@@ -75,7 +75,7 @@ module VPL
     def self.verify_minimum_git_version!
       return unless git_version < Gem::Version.new('1.8.5')
 
-      raise 'You need at least git version 1.8.5 to use vcpkg-Pipeline'
+      raise 'You need at least git version 1.8.5 to use vcpkg_pipeline'
     end
 
     #
